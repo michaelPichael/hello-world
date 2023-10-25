@@ -22,7 +22,7 @@ public class Temperature {
         @NoArgsConstructor
         @AllArgsConstructor
         public static class Period {
-            private Integer temperatureValue;
+            private Integer temperature;
             private String temperatureUnit;
         }
     }

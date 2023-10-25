@@ -7,6 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -15,7 +19,18 @@ public class WeatherForecastController {
 
     @GetMapping("/forecast")
     public ResponseEntity<Forecast> getForecast(@RequestParam double latitude, @RequestParam double longitude) {
-        Forecast forecast = forecastService.getForecast(latitude, longitude);
-        return ResponseEntity.ok(forecast);
+        try {
+            Optional<Forecast> forecast = forecastService.getForecast(latitude, longitude);
+            if (forecast.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(forecast.get());
+//        return forecast.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        } catch (HttpClientErrorException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (HttpServerErrorException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+
     }
 }
