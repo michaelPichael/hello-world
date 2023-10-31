@@ -3,8 +3,6 @@ package com.example.helloworld.http;
 import com.example.helloworld.exception.WeatherAPIException;
 import com.example.helloworld.http.domain.Grid;
 import com.example.helloworld.http.domain.Temperature;
-import com.example.helloworld.http.domain.Temperature.Properties;
-import com.example.helloworld.http.domain.Temperature.Properties.Period;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
