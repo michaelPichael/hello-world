@@ -1,5 +1,6 @@
 package com.example.helloworld.http;
 
+import com.example.helloworld.exception.WeatherAPIException;
 import com.example.helloworld.http.domain.Grid;
 import com.example.helloworld.http.domain.Temperature;
 import com.example.helloworld.http.domain.Temperature.Properties;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -28,8 +30,10 @@ public class WeatherHttpClient {
             if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
                 return Optional.empty();
             } else {
-                throw e;
+                throw new WeatherAPIException("Client Error Exception While Getting Grid Data", e);
             }
+        } catch (HttpServerErrorException e) {
+            throw new WeatherAPIException("Server Error Exception While Getting Grid Data", e);
         }
     }
 
@@ -42,8 +46,10 @@ public class WeatherHttpClient {
             if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
                 return Optional.empty();
             } else {
-                throw e;
+                throw new WeatherAPIException("Client Error Exception While Getting Temperature Data", e);
             }
+        } catch (HttpServerErrorException e) {
+            throw new WeatherAPIException("Server Error Exception While Getting Temperature Data", e);
         }
     }
 }
