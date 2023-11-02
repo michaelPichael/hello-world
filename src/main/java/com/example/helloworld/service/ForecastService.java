@@ -18,7 +18,7 @@ public class ForecastService {
         if (grid.isEmpty()) {
             return Optional.empty();
         }
-        Optional<Temperature> temperature = weatherHttpClient.getTemperature(grid.get().getProperties().getGridX(), grid.get().getProperties().getGridX());
+        Optional<Temperature> temperature = weatherHttpClient.getTemperature(grid.get().getProperties().getGridX(), grid.get().getProperties().getGridY());
         if (temperature.isEmpty()) {
             return Optional.empty();
         }
