@@ -3,6 +3,8 @@ package com.example.helloworld.http;
 import com.example.helloworld.exception.WeatherAPIException;
 import com.example.helloworld.http.domain.Grid;
 import com.example.helloworld.http.domain.Temperature;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,9 @@ import java.util.Optional;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class WeatherHttpClient {
-    RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
     String urlDomain = "https://api.weather.gov";
     public Optional<Grid> getGrid(double latitude, double longitude) {
         try {
